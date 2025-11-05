@@ -6,16 +6,15 @@ import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams?: { tab?: string };
-}) {
+export default async function Home(props: any) {
+  // searchParams vem do Next; tratamos aqui dentro
+  const searchParams = (props?.searchParams ?? {}) as { tab?: string };
+
   const projetos: Project[] = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },
   });
 
-  const tab = searchParams?.tab === "edu" ? "edu" : "desenvolve";
+  const tab = searchParams.tab === "edu" ? "edu" : "desenvolve";
 
   const filtrados =
     tab === "desenvolve"
@@ -47,12 +46,13 @@ export default async function Home({
               Vitrine de Projetos
             </h1>
             <p className="text-sm md:text-base text-slate-300 max-w-2xl leading-relaxed">
-              Explore os projetos separados por ambiente. Clique em um card para abrir;
-              quando houver documentação, baixe o PDF diretamente pelo card.
+              Explore os projetos separados por ambiente. Clique em um card para
+              abrir; quando houver documentação, baixe o PDF diretamente pelo
+              card.
             </p>
           </div>
 
-          {/* LOGO MAIOR E POSICIONADA NO CANTO SUPERIOR DIREITO */}
+          {/* LOGO MAIOR E NO CANTO DIREITO */}
           <div className="fixed top-6 right-8 md:top-8 md:right-10 z-50">
             <div className="relative h-40 w-40 md:h-44 md:w-44">
               <Image
