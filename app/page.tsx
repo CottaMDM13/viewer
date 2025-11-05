@@ -6,11 +6,11 @@ import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
-type PageProps = {
+export default async function Home({
+  searchParams,
+}: {
   searchParams?: { tab?: string };
-};
-
-export default async function Home({ searchParams }: PageProps) {
+}) {
   const projetos: Project[] = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },
   });
@@ -29,7 +29,6 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#0b1220] text-slate-50 font-inter">
-      {/* AQUI era max-w-6xl mx-auto — removi o max-width e deixei full width */}
       <div className="w-full px-4 sm:px-8 lg:px-16 py-10 min-h-screen flex flex-col">
         {/* fundo suave baseado na logo */}
         <div className="absolute inset-0 -z-10">
@@ -37,36 +36,35 @@ export default async function Home({ searchParams }: PageProps) {
           <div className="absolute bottom-0 right-20 h-72 w-72 bg-[#facc15]/18 blur-3xl rounded-full" />
         </div>
 
-      <header className="relative mb-10 flex flex-col md:flex-row items-start md:items-center justify-between">
-        {/* BLOCO DE TEXTO À ESQUERDA */}
-        <div className="flex flex-col gap-2">
-          <span className="text-[11px] tracking-[0.25em] uppercase text-[#facc15] font-semibold">
-            Núcleo de Inovação e Criatividade
-          </span>
-          <h1 className="text-3xl md:text-5xl font-extrabold mt-1 bg-gradient-to-r from-[#1d4ed8] via-[#38bdf8] to-[#facc15] bg-clip-text text-transparent">
-            Vitrine de Projetos
-          </h1>
-          <p className="text-sm md:text-base text-slate-300 max-w-2xl leading-relaxed">
-            Explore os projetos separados por ambiente. Clique em um card para abrir;
-            quando houver documentação, baixe o PDF diretamente pelo card.
-          </p>
-        </div>
-
-        {/* LOGO MAIOR E POSICIONADA NO CANTO SUPERIOR DIREITO */}
-        <div className="fixed top-5 right-10 z-50">
-          <div className="relative h-32 w-32 md:h-36 md:w-36">
-            <Image
-              src="/nic-logo.png"
-              alt="NIC - Núcleo de Inovação e Criatividade"
-              fill
-              className="object-contain"
-              priority
-            />
+        {/* HEADER AJUSTADO */}
+        <header className="relative mb-10 flex flex-col md:flex-row items-start md:items-center justify-between">
+          {/* BLOCO DE TEXTO À ESQUERDA */}
+          <div className="flex flex-col gap-2">
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#facc15] font-semibold">
+              Núcleo de Inovação e Criatividade
+            </span>
+            <h1 className="text-3xl md:text-5xl font-extrabold mt-1 bg-gradient-to-r from-[#1d4ed8] via-[#38bdf8] to-[#facc15] bg-clip-text text-transparent">
+              Vitrine de Projetos
+            </h1>
+            <p className="text-sm md:text-base text-slate-300 max-w-2xl leading-relaxed">
+              Explore os projetos separados por ambiente. Clique em um card para abrir;
+              quando houver documentação, baixe o PDF diretamente pelo card.
+            </p>
           </div>
-        </div>
-      </header>
 
-
+          {/* LOGO MAIOR E POSICIONADA NO CANTO SUPERIOR DIREITO */}
+          <div className="fixed top-6 right-8 md:top-8 md:right-10 z-50">
+            <div className="relative h-40 w-40 md:h-44 md:w-44">
+              <Image
+                src="/nic-logo.png"
+                alt="NIC - Núcleo de Inovação e Criatividade"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </header>
 
         {/* ABAS CENTRALIZADAS */}
         <div className="flex justify-center mb-10">
@@ -122,7 +120,7 @@ export default async function Home({ searchParams }: PageProps) {
           </div>
         </div>
 
-        {/* CONTEÚDO PRINCIPAL – mantenho o grid/card do jeito que você curtiu */}
+        {/* CONTEÚDO PRINCIPAL */}
         <main className="flex-1 flex flex-col">
           {filtrados.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
@@ -190,8 +188,7 @@ export default async function Home({ searchParams }: PageProps) {
         <footer className="mt-16 border-t border-slate-800 pt-4 text-[11px] text-slate-400 flex flex-wrap justify-between gap-2">
           <span>NIC • Vitrine de Projetos</span>
           <span>
-            © {new Date().getFullYear()} — NIC · Núcleo de Inovação e
-            Criatividade
+            © {new Date().getFullYear()} — NIC · Núcleo de Inovação e Criatividade
           </span>
         </footer>
       </div>
