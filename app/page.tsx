@@ -53,8 +53,8 @@ export default async function Home(props: any) {
           </div>
 
           {/* LOGO MAIOR E NO CANTO DIREITO */}
-          <div className="fixed top-5 right-10 md:top-8 md:right-10 z-50">
-            <div className="relative h-32 w-32 md:h-44 md:w-44">
+          <div className="fixed top-5 right-10 z-50">
+            <div className="relative h-32 w-32 md:h-36 md:w-36">
               <Image
                 src="/nic-logo.png"
                 alt="NIC - Núcleo de Inovação e Criatividade"
